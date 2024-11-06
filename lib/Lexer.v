@@ -57,6 +57,7 @@ Fixpoint lex_string_cpt n s :=
           | "(" => option_map (Buf_cons (LPAREN tt)) (lex_string_cpt n s')
           | ")" => option_map (Buf_cons (RPAREN tt)) (lex_string_cpt n s')
           | "+" => option_map (Buf_cons (ADD tt)) (lex_string_cpt n s')
+          | "-" => option_map (Buf_cons (SUB tt)) (lex_string_cpt n s')
           | _ =>
               if is_digit c then
                 let (m, s) := readnum 0 s in

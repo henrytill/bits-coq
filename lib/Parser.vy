@@ -4,7 +4,7 @@
 From Machine Require Syntax.
 %}
 
-%token ADD LPAREN RPAREN EOF
+%token ADD SUB LPAREN RPAREN EOF
 %token <nat> NUM
 
 %start <Syntax.expr> parse_expr
@@ -24,6 +24,7 @@ p_atom :
 p_expr :
   | p_factor             { $1 }
   | p_expr ADD p_factor  { Syntax.AddE $1 $3 }
+  | p_expr SUB p_factor  { Syntax.SubE $1 $3 }
 
 p_factor :
   | p_atom               { $1 }

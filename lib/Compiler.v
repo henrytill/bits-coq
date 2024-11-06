@@ -7,12 +7,14 @@ Open Scope string_scope.
 
 Inductive op : Type :=
 | PUSH : nat -> op
-| ADD : op.
+| ADD : op
+| SUB : op.
 
 Fixpoint eval (e : Syntax.expr) : nat :=
   match e with
   | Syntax.ValE n => n
   | Syntax.AddE e1 e2 => eval e1 + eval e2
+  | Syntax.SubE e1 e2 => eval e1 - eval e2
   end.
 
 Definition stack := list nat.
@@ -23,13 +25,16 @@ Fixpoint exec (c : code) (s : stack) : stack :=
   | [], s => s
   | (PUSH n :: c'), s => exec c' (n :: s)
   | (ADD :: c'), (m :: n :: s') => exec c' ((n + m) :: s')
-  | (ADD :: _), _ => []  (* Error case *)
+  | (SUB :: c'), (m :: n :: s') => exec c' ((n - m) :: s')
+  | (ADD :: _), _ => []
+  | (SUB :: _), _ => []
   end.
 
 Fixpoint compile' (e : Syntax.expr) (c : code) : code :=
   match e with
   | Syntax.ValE n => PUSH n :: c
   | Syntax.AddE e1 e2 => compile' e1 (compile' e2 (ADD :: c))
+  | Syntax.SubE e1 e2 => compile' e1 (compile' e2 (SUB :: c))
   end.
 
 Definition compile (e : Syntax.expr) : code := compile' e [].
@@ -40,6 +45,10 @@ Proof.
   intros e.
   induction e; intros c s.
   - simpl.
+    reflexivity.
+  - simpl.
+    rewrite IHe1.
+    rewrite IHe2.
     reflexivity.
   - simpl.
     rewrite IHe1.
@@ -63,10 +72,16 @@ Proof. reflexivity. Qed.
 Example test_compile_add : compile (Syntax.AddE (Syntax.ValE 3) (Syntax.ValE 4)) = [PUSH 3; PUSH 4; ADD].
 Proof. reflexivity. Qed.
 
+Example test_compile_sub : compile (Syntax.SubE (Syntax.ValE 4) (Syntax.ValE 3)) = [PUSH 4; PUSH 3; SUB].
+Proof. reflexivity. Qed.
+
 Example test_exec_val : exec (compile (Syntax.ValE 5)) [] = [5].
 Proof. reflexivity. Qed.
 
 Example test_exec_add : exec (compile (Syntax.AddE (Syntax.ValE 3) (Syntax.ValE 4))) [] = [7].
+Proof. reflexivity. Qed.
+
+Example test_exec_sub : exec (compile (Syntax.SubE (Syntax.ValE 4) (Syntax.ValE 3))) [] = [1].
 Proof. reflexivity. Qed.
 
 Definition parse_string s :=
