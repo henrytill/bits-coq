@@ -1,4 +1,4 @@
-From Coq Require Import BinNat Ascii String.
+From Coq Require Import Ascii String.
 From Machine Require Import Parser.
 Import Parser.MenhirLibParser.Inter.
 
