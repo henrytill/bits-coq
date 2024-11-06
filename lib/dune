@@ -1,0 +1,10 @@
+(coq.theory
+ (name Machine)
+ (package coq_bits)
+ (theories MenhirLib))
+
+(rule
+ (target Parser.v)
+ (deps Parser.vy)
+ (action
+  (run menhir --coq %{deps})))
