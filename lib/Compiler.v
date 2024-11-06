@@ -1,9 +1,9 @@
-Require Import Arith List String.
-From Machine Require Import Parser Lexer.
-Import MenhirLibParser.Inter.
-Open Scope string_scope.
+From Coq Require Import Arith List String.
+From Machine Require Lexer Parser.
+Import Parser.MenhirLibParser.Inter.
+Import List.ListNotations.
 
-Import ListNotations.
+Open Scope string_scope.
 
 Inductive op : Type :=
 | PUSH : nat -> op

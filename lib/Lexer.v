@@ -1,6 +1,7 @@
-Require Import BinNat Ascii String.
+From Coq Require Import BinNat Ascii String.
 From Machine Require Import Parser.
-Import MenhirLibParser.Inter.
+Import Parser.MenhirLibParser.Inter.
+
 Open Scope char_scope.
 Open Scope bool_scope.
 
