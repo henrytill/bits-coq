@@ -1,11 +1,7 @@
 (* -*- mode: prog; -*- *)
 
 %{
-Module Syntax.
-Inductive expr : Type :=
-| ValE : nat -> expr
-| AddE : expr -> expr -> expr.
-End Syntax.
+From Machine Require Syntax.
 %}
 
 %token ADD LPAREN RPAREN EOF
