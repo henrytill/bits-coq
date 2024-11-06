@@ -12,9 +12,9 @@ Inductive op : Type :=
 
 Fixpoint eval (e : Syntax.expr) : nat :=
   match e with
-  | Syntax.ValE n => n
-  | Syntax.AddE e1 e2 => eval e1 + eval e2
-  | Syntax.SubE e1 e2 => eval e1 - eval e2
+  | Syntax.Val n => n
+  | Syntax.Add e1 e2 => eval e1 + eval e2
+  | Syntax.Sub e1 e2 => eval e1 - eval e2
   end.
 
 Definition stack := list nat.
@@ -32,9 +32,9 @@ Fixpoint exec (c : code) (s : stack) : stack :=
 
 Fixpoint compile' (e : Syntax.expr) (c : code) : code :=
   match e with
-  | Syntax.ValE n => PUSH n :: c
-  | Syntax.AddE e1 e2 => compile' e1 (compile' e2 (ADD :: c))
-  | Syntax.SubE e1 e2 => compile' e1 (compile' e2 (SUB :: c))
+  | Syntax.Val n => PUSH n :: c
+  | Syntax.Add e1 e2 => compile' e1 (compile' e2 (ADD :: c))
+  | Syntax.Sub e1 e2 => compile' e1 (compile' e2 (SUB :: c))
   end.
 
 Definition compile (e : Syntax.expr) : code := compile' e [].
@@ -66,22 +66,22 @@ Proof.
   reflexivity.
 Qed.
 
-Example test_compile_val : compile (Syntax.ValE 5) = [PUSH 5].
+Example test_compile_val : compile (Syntax.Val 5) = [PUSH 5].
 Proof. reflexivity. Qed.
 
-Example test_compile_add : compile (Syntax.AddE (Syntax.ValE 3) (Syntax.ValE 4)) = [PUSH 3; PUSH 4; ADD].
+Example test_compile_add : compile (Syntax.Add (Syntax.Val 3) (Syntax.Val 4)) = [PUSH 3; PUSH 4; ADD].
 Proof. reflexivity. Qed.
 
-Example test_compile_sub : compile (Syntax.SubE (Syntax.ValE 4) (Syntax.ValE 3)) = [PUSH 4; PUSH 3; SUB].
+Example test_compile_sub : compile (Syntax.Sub (Syntax.Val 4) (Syntax.Val 3)) = [PUSH 4; PUSH 3; SUB].
 Proof. reflexivity. Qed.
 
-Example test_exec_val : exec (compile (Syntax.ValE 5)) [] = [5].
+Example test_exec_val : exec (compile (Syntax.Val 5)) [] = [5].
 Proof. reflexivity. Qed.
 
-Example test_exec_add : exec (compile (Syntax.AddE (Syntax.ValE 3) (Syntax.ValE 4))) [] = [7].
+Example test_exec_add : exec (compile (Syntax.Add (Syntax.Val 3) (Syntax.Val 4))) [] = [7].
 Proof. reflexivity. Qed.
 
-Example test_exec_sub : exec (compile (Syntax.SubE (Syntax.ValE 4) (Syntax.ValE 3))) [] = [1].
+Example test_exec_sub : exec (compile (Syntax.Sub (Syntax.Val 4) (Syntax.Val 3))) [] = [1].
 Proof. reflexivity. Qed.
 
 Definition parse_string s :=

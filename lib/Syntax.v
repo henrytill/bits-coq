@@ -1,4 +1,4 @@
 Inductive expr : Type :=
-| ValE : nat -> expr
-| AddE : expr -> expr -> expr
-| SubE : expr -> expr -> expr.
+| Val : nat -> expr
+| Add : expr -> expr -> expr
+| Sub : expr -> expr -> expr.

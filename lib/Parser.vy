@@ -18,13 +18,13 @@ From Machine Require Syntax.
 parse_expr : p_expr EOF  { $1 }
 
 p_atom :
-  | NUM                  { Syntax.ValE $1 }
+  | NUM                  { Syntax.Val $1 }
   | LPAREN p_expr RPAREN { $2 }
 
 p_expr :
   | p_factor             { $1 }
-  | p_expr ADD p_factor  { Syntax.AddE $1 $3 }
-  | p_expr SUB p_factor  { Syntax.SubE $1 $3 }
+  | p_expr ADD p_factor  { Syntax.Add $1 $3 }
+  | p_expr SUB p_factor  { Syntax.Sub $1 $3 }
 
 p_factor :
   | p_atom               { $1 }
