@@ -35,10 +35,10 @@ Fixpoint compile' (e : Syntax.expr) (c : code) : code :=
 Definition compile (e : Syntax.expr) : code := compile' e [].
 
 Lemma compile'_exec_eval :
-  forall e s c, exec (compile' e c) s = exec c (eval e :: s).
+  forall e c s, exec (compile' e c) s = exec c (eval e :: s).
 Proof.
   intros e.
-  induction e; intros s c.
+  induction e; intros c s.
   - simpl.
     reflexivity.
   - simpl.
@@ -81,4 +81,4 @@ Definition example_ops := option_map compile (parse_string example).
 
 Compute example_ops.
 
-Compute option_map (fun x => exec x []) (example_ops).
+Compute option_map (fun ops => exec ops []) (example_ops).

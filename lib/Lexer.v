@@ -23,20 +23,23 @@ Proof. simpl. reflexivity. Qed.
 
 Fixpoint readnum acc s :=
   match s with
-  | String "0" s => readnum (acc*10) s
-  | String "1" s => readnum (acc*10+1) s
-  | String "2" s => readnum (acc*10+2) s
-  | String "3" s => readnum (acc*10+3) s
-  | String "4" s => readnum (acc*10+4) s
-  | String "5" s => readnum (acc*10+5) s
-  | String "6" s => readnum (acc*10+6) s
-  | String "7" s => readnum (acc*10+7) s
-  | String "8" s => readnum (acc*10+8) s
-  | String "9" s => readnum (acc*10+9) s
-  | _ => (acc,s)
+  | String "0" s => readnum (acc * 10) s
+  | String "1" s => readnum (acc * 10 + 1) s
+  | String "2" s => readnum (acc * 10 + 2) s
+  | String "3" s => readnum (acc * 10 + 3) s
+  | String "4" s => readnum (acc * 10 + 4) s
+  | String "5" s => readnum (acc * 10 + 5) s
+  | String "6" s => readnum (acc * 10 + 6) s
+  | String "7" s => readnum (acc * 10 + 7) s
+  | String "8" s => readnum (acc * 10 + 8) s
+  | String "9" s => readnum (acc * 10 + 9) s
+  | _ => (acc, s)
   end.
 
 Example readnum_1 : readnum 0 "1" = (1, ""%string).
+Proof. simpl. reflexivity. Qed.
+
+Example readnum_137 : readnum 0 "137" = (137, ""%string).
 Proof. simpl. reflexivity. Qed.
 
 Fixpoint lex_string_cpt n s :=
@@ -56,7 +59,7 @@ Fixpoint lex_string_cpt n s :=
           | "+" => option_map (Buf_cons (ADD tt)) (lex_string_cpt n s')
           | _ =>
               if is_digit c then
-                let (m,s) := readnum 0 s in
+                let (m, s) := readnum 0 s in
                 option_map (Buf_cons (NUM m)) (lex_string_cpt n s)
               else
                 None
