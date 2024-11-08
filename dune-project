@@ -9,15 +9,11 @@
 (generate_opam_files true)
 
 (source
- (github username/reponame))
+ (github henrytill/coq_bits))
 
-(authors "Author Name")
+(authors "Henry Till <henrytill@gmail.com>")
 
-(maintainers "Maintainer Name")
-
-(license LICENSE)
-
-(documentation https://url/to/documentation)
+(maintainers "Henry Till <henrytill@gmail.com>")
 
 (package
  (name coq_bits)
@@ -26,5 +22,3 @@
  (depends ocaml dune menhir coq coq-menhirlib)
  (tags
   (topics "to describe" your project)))
-
-; See the complete stanza docs at https://dune.readthedocs.io/en/stable/reference/dune-project/index.html
