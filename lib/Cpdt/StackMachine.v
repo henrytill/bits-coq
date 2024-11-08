@@ -127,6 +127,21 @@ Module Untyped.
         reflexivity.
     Qed.
 
+    Lemma compile_correct'_auto :
+      forall (e : t) (p : Prog.t) (s : stack),
+        Prog.denote (compile e ++ p) s = Prog.denote p (denote e :: s).
+    Proof.
+      induction e.
+      - simpl.
+        auto.
+      - intros.
+        simpl.
+        repeat rewrite app_assoc_reverse.
+        repeat rewrite IHe2.
+        repeat rewrite IHe1.
+        auto.
+    Qed.
+
     Theorem compile_correct :
       forall (e : t),
         Prog.denote (compile e) nil = Some (denote e :: nil).
