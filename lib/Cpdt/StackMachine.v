@@ -26,7 +26,7 @@ Module Untyped.
       | Const n => Some (n :: s)
       | Binop b =>
           match s with
-          | arg1 :: arg2 :: s' => Some ((Binop.denote b) arg1 arg2 :: s')
+          | x :: y :: s' => Some ((Binop.denote b) x y :: s')
           | _ => None
           end
       end.
@@ -86,7 +86,8 @@ Module Untyped.
       auto. Qed.
 
       Example compile_nested :
-        compile nested = [Instr.Const 7; Instr.Const 2; Instr.Const 2; Instr.Binop Binop.Plus; Instr.Binop Binop.Times].
+        compile nested =
+          [Instr.Const 7; Instr.Const 2; Instr.Const 2; Instr.Binop Binop.Plus; Instr.Binop Binop.Times].
       auto. Qed.
 
       Example denote_compile_const : Prog.denote (compile const) [] = Some [42].
@@ -99,7 +100,8 @@ Module Untyped.
       auto. Qed.
     End Examples.
 
-    Lemma compile_correct' : forall e p s,
+    Lemma compile_correct' :
+      forall (e : t) (p : Prog.t) (s : stack),
         Prog.denote (compile e ++ p) s = Prog.denote p (denote e :: s).
     Proof.
       induction e.
@@ -125,7 +127,8 @@ Module Untyped.
         reflexivity.
     Qed.
 
-    Theorem compile_correct : forall e,
+    Theorem compile_correct :
+      forall (e : t),
         Prog.denote (compile e) nil = Some (denote e :: nil).
     Proof.
       intros.
@@ -182,36 +185,36 @@ Module Typed.
     | BConst : forall s, bool -> t s (Ty.Bool :: s)
     | Binop : forall x y r s, Binop.t x y r -> t (x :: y :: s) (r :: s).
 
-    Definition denote {ts ts' : tstack} (i : t ts ts') : vstack ts -> vstack ts' :=
+    Definition denote {a b : tstack} (i : t a b) : vstack a -> vstack b :=
       match i with
       | NConst _ n => fun s => (n, s)
       | BConst _ b => fun s => (b, s)
       | Binop _ b => fun s =>
-                       let '(arg1, (arg2, s')) := s in
-                       ((Binop.denote b) arg1 arg2, s')
+                       let '(x, (y, s')) := s in
+                       ((Binop.denote b) x y, s')
       end.
   End Instr.
 
   Module Prog.
     Inductive t : tstack -> tstack -> Set :=
-    | Nil : forall s, t s s
-    | Cons : forall s1 s2 s3, Instr.t s1 s2 -> t s2 s3 -> t s1 s3.
+    | Nil : forall a, t a a
+    | Cons : forall a b c, Instr.t a b -> t b c -> t a c.
 
-    Fixpoint denote {ts ts' : tstack} (p : t ts ts') : vstack ts -> vstack ts' :=
+    Fixpoint denote {a b : tstack} (p : t a b) : vstack a -> vstack b :=
       match p with
       | Nil _ => fun s => s
       | Cons i p' => fun s => denote p' (Instr.denote i s)
       end.
 
-    Fixpoint concat {ts ts' ts'' : tstack} (p : t ts ts') : t ts' ts'' -> t ts ts'' :=
+    Fixpoint concat {a b c : tstack} (p : t a b) : t b c -> t a c :=
       match p with
-      | Nil _ => fun p' => p'
-      | Cons i p1 => fun p' => Cons i (concat p1 p')
+      | Nil _ => fun q => q
+      | Cons i p' => fun q => Cons i (concat p' q)
       end.
 
     Lemma concat_correct :
-      forall ts ts' ts'' (p : Prog.t ts ts') (p' : Prog.t ts' ts'') (s : vstack ts),
-        Prog.denote (Prog.concat p p') s = Prog.denote p' (Prog.denote p s).
+      forall (a b c : tstack) (p : Prog.t a b) (q : Prog.t b c) (s : vstack a),
+        Prog.denote (Prog.concat p q) s = Prog.denote q (Prog.denote p s).
     Proof.
       induction p.
       - simpl.
@@ -249,9 +252,10 @@ Module Typed.
     Section Examples.
       Definition nconst := NConst 42.
       Definition bconst := BConst false.
-      Definition nested := Binop Binop.Times (Binop Binop.Plus (NConst 2) (NConst 2)) (NConst 7).
-      Definition nested_eq := Binop (Binop.Eq Ty.Nat) (Binop Binop.Plus (NConst 2) (NConst 2)) (NConst 7).
-      Definition nested_lt := Binop Binop.Lt (Binop Binop.Plus (NConst 2) (NConst 2)) (NConst 7).
+      Definition plus := Binop Binop.Plus (NConst 2) (NConst 2).
+      Definition nested := Binop Binop.Times plus (NConst 7).
+      Definition nested_eq := Binop (Binop.Eq Ty.Nat) plus (NConst 7).
+      Definition nested_lt := Binop Binop.Lt plus (NConst 7).
 
       Example denote_nconst : denote nconst = 42.
       auto. Qed.
@@ -284,7 +288,8 @@ Module Typed.
       auto. Qed.
     End Examples.
 
-    Lemma compile_correct' : forall x (e : t x) ts (s : vstack ts),
+    Lemma compile_correct' :
+      forall (x : Ty.t) (e : t x) (ts : tstack) (s : vstack ts),
         Prog.denote (compile e ts) s = (Exp.denote e, s).
     Proof.
       induction e.
@@ -302,7 +307,8 @@ Module Typed.
         reflexivity.
     Qed.
 
-    Theorem compile_correct : forall x (e : t x),
+    Theorem compile_correct :
+      forall (x : Ty.t) (e : t x),
         Prog.denote (compile e nil) tt = (Exp.denote e, tt).
     Proof.
       intros.
