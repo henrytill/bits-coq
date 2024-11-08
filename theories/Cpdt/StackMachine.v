@@ -1,5 +1,5 @@
 From Coq Require Import Bool Arith List.
-From Cpdt Require Import Base.
+From Bits.Cpdt Require Import Base.
 
 Module Untyped.
   Definition stack := list nat.

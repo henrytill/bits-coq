@@ -1,5 +1,5 @@
 From Coq Require Import Arith List String.
-From Machine Require Lexer Parser.
+From Bits.Machine Require Lexer Parser.
 Import Parser.MenhirLibParser.Inter.
 Import List.ListNotations.
 

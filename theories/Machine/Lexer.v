@@ -1,5 +1,5 @@
 From Coq Require Import Ascii String.
-From Machine Require Import Parser.
+From Bits.Machine Require Import Parser.
 Import Parser.MenhirLibParser.Inter.
 
 Open Scope char_scope.

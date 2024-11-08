@@ -1,3 +1,0 @@
-(coq.theory
- (name Cpdt)
- (package coq-bits))

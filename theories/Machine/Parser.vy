@@ -1,7 +1,7 @@
 (* -*- mode: prog; -*- *)
 
 %{
-From Machine Require Syntax.
+From Bits.Machine Require Syntax.
 %}
 
 %token ADD SUB LPAREN RPAREN EOF
