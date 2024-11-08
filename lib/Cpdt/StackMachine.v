@@ -313,8 +313,7 @@ Module Typed.
       - simpl.
         auto.
       - intros.
-        unfold Prog.denote.
-        unfold compile.
+        simpl.
         repeat rewrite Prog.concat_correct.
         repeat rewrite IHe2.
         repeat rewrite Prog.concat_correct.
