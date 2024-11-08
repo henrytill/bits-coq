@@ -19,6 +19,23 @@
  (name coq-bits)
  (synopsis "A short synopsis")
  (description "A longer description")
- (depends ocaml dune menhir coq coq-menhirlib)
+ (depends
+  ocaml
+  dune
+  menhir
+  coq
+  coq-menhirlib
+  (ppx_deriving
+   (and
+    :with-test
+    (>= 6.0.3)))
+  (ppx_import
+   (and
+    :with-test
+    (>= 1.11.0)))
+  (alcotest
+   (and
+    :with-test
+    (>= 1.7.0))))
  (tags
   (topics "to describe" your project)))

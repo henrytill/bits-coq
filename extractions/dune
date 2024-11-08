@@ -8,3 +8,10 @@
  (public_name coq-bits.stack-machine)
  (modules stack_machine)
  (flags -w -20))
+
+(test
+ (name stack_machine_test)
+ (modules stack_machine_test)
+ (libraries stack_machine alcotest)
+ (preprocess
+  (staged_pps ppx_import ppx_deriving.show ppx_deriving.eq)))

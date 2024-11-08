@@ -41,10 +41,18 @@
           "${coq-opam}/released"
         ];
         on = opam-nix.lib.${system};
-        scope = on.buildOpamProject { inherit repos; } package ./. {
-          ocaml-base-compiler = "5.2.0";
-          coq = "*";
-        };
+        scope =
+          on.buildOpamProject
+            {
+              inherit repos;
+              resolveArgs.with-test = true;
+            }
+            package
+            ./.
+            {
+              ocaml-base-compiler = "5.2.0";
+              coq = "*";
+            };
         overlay = final: prev: { ${package} = prev.${package}.overrideAttrs (as: { }); };
       in
       {
