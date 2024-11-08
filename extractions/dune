@@ -1,0 +1,10 @@
+(coq.extraction
+ (prelude StackMachineExtraction)
+ (extracted_modules stack_machine)
+ (theories Bits))
+
+(library
+ (name stack_machine)
+ (public_name coq-bits.stack-machine)
+ (modules stack_machine)
+ (flags -w -20))
