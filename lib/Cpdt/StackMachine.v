@@ -1,6 +1,5 @@
 From Coq Require Import Bool Arith List.
 From Cpdt Require Import Base.
-Import List.ListNotations.
 
 Module Untyped.
   Definition stack := list nat.
@@ -18,7 +17,7 @@ Module Untyped.
   End Binop.
 
   Module Instr.
-    Inductive t  : Set :=
+    Inductive t : Set :=
     | Const : nat -> t
     | Binop : Binop.t -> t.
 
@@ -65,42 +64,38 @@ Module Untyped.
       end.
 
     Section Examples.
-      Example denote_const :
-        denote (Const 42) = 42.
+      Import List.ListNotations.
+
+      Definition const := Const 42.
+      Definition plus := Binop Binop.Plus (Const 2) (Const 2).
+      Definition nested := Binop Binop.Times plus (Const 7).
+
+      Example denote_const : denote const = 42.
       auto. Qed.
 
-      Example denote_plus :
-        denote (Binop Binop.Plus (Const 2) (Const 2)) = 4.
+      Example denote_plus : denote plus = 4.
       auto. Qed.
 
-      Example denote_nested :
-        denote (Binop Binop.Times (Binop Binop.Plus (Const 2) (Const 2)) (Const 7)) = 28.
+      Example denote_nested : denote nested = 28.
       auto. Qed.
 
-      Example compile_const :
-        compile (Const 42) = [Instr.Const 42].
+      Example compile_const : compile const = [Instr.Const 42].
       auto. Qed.
 
-      Example compile_plus :
-        compile (Binop Binop.Plus (Const 2) (Const 2)) =
-          [Instr.Const 2; Instr.Const 2; Instr.Binop Binop.Plus].
+      Example compile_plus : compile plus = [Instr.Const 2; Instr.Const 2; Instr.Binop Binop.Plus].
       auto. Qed.
 
       Example compile_nested :
-        compile (Binop Binop.Times (Binop Binop.Plus (Const 2) (Const 2)) (Const 7)) =
-          [Instr.Const 7; Instr.Const 2; Instr.Const 2; Instr.Binop Binop.Plus; Instr.Binop Binop.Times].
+        compile nested = [Instr.Const 7; Instr.Const 2; Instr.Const 2; Instr.Binop Binop.Plus; Instr.Binop Binop.Times].
       auto. Qed.
 
-      Example denote_compile_const :
-        Prog.denote (compile (Const 42)) [] = Some [42].
+      Example denote_compile_const : Prog.denote (compile const) [] = Some [42].
       auto. Qed.
 
-      Example denote_compile_plus :
-        Prog.denote (compile (Binop Binop.Plus (Const 2) (Const 2))) [] = Some [4].
+      Example denote_compile_plus : Prog.denote (compile plus) [] = Some [4].
       auto. Qed.
 
-      Example denote_compile_nested :
-        Prog.denote (compile (Binop Binop.Times (Binop Binop.Plus (Const 2) (Const 2)) (Const 7))) [] = Some [28].
+      Example denote_compile_nested : Prog.denote (compile nested) [] = Some [28].
       auto. Qed.
     End Examples.
 
