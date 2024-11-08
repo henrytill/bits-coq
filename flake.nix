@@ -30,7 +30,7 @@
       ...
     }@inputs:
     let
-      package = "coq_bits";
+      package = "coq-bits";
     in
     flake-utils.lib.eachDefaultSystem (
       system:

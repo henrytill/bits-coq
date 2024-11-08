@@ -1,6 +1,6 @@
 (coq.theory
  (name Machine)
- (package coq_bits)
+ (package coq-bits)
  (theories MenhirLib))
 
 (rule

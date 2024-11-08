@@ -4,19 +4,19 @@
 
 (using menhir 2.1)
 
-(name coq_bits)
+(name coq-bits)
 
 (generate_opam_files true)
 
 (source
- (github henrytill/coq_bits))
+ (github henrytill/coq-bits))
 
 (authors "Henry Till <henrytill@gmail.com>")
 
 (maintainers "Henry Till <henrytill@gmail.com>")
 
 (package
- (name coq_bits)
+ (name coq-bits)
  (synopsis "A short synopsis")
  (description "A longer description")
  (depends ocaml dune menhir coq coq-menhirlib)
