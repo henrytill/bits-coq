@@ -1,4 +1,5 @@
 From Coq Require Import Bool Arith List.
+From Cpdt Require Import Base.
 Import List.ListNotations.
 
 Module Untyped.
@@ -103,10 +104,6 @@ Module Untyped.
       auto. Qed.
     End Examples.
 
-    Lemma app_assoc_reverse {A : Type} (l m n : list A) :
-      (l ++ m) ++ n = l ++ m ++ n.
-    Proof. symmetry. apply app_assoc. Qed.
-
     Lemma compile_correct' : forall e p s,
         Prog.denote (compile e ++ p) s = Prog.denote p (denote e :: s).
     Proof.
@@ -132,9 +129,6 @@ Module Untyped.
         fold Prog.denote.
         reflexivity.
     Qed.
-
-    Theorem app_nil_end {A : Type} (l : list A) : l = l ++ [].
-    Proof. symmetry; apply app_nil_r. Qed.
 
     Theorem compile_correct : forall e,
         Prog.denote (compile e) nil = Some (denote e :: nil).
