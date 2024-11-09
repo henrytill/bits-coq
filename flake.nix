@@ -10,7 +10,7 @@
       flake = false;
     };
     opam-nix = {
-      url = "github:tweag/opam-nix";
+      url = "github:henrytill/opam-nix/develop";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.opam-repository.follows = "opam-repository";
     };
@@ -56,7 +56,7 @@
         overlay = final: prev: { ${package} = prev.${package}.overrideAttrs (as: { }); };
       in
       {
-        legacyPackages = scope.overrideScope' overlay;
+        legacyPackages = scope.overrideScope overlay;
         packages.default = self.legacyPackages.${system}.${package};
       }
     );
