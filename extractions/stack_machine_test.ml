@@ -30,41 +30,43 @@ module Typed = struct
   end
 end
 
-let testable_nat = Alcotest.testable pp_nat equal_nat
-let testable_prog = Alcotest.testable Typed.Prog.pp Typed.Prog.equal
+module Tests = struct
+  open Typed
 
-let denote_nconst () =
-  let open Typed in
-  let expected = nat_of_int 42 in
-  let nconst = Exp.NConst expected in
-  let actual = Exp.denote Ty.Nat nconst |> Obj.obj in
-  Alcotest.(check testable_nat) "same nat" expected actual
+  let testable_nat = Alcotest.testable pp_nat equal_nat
+  let testable_prog = Alcotest.testable Prog.pp Prog.equal
 
-let compile_nconst () =
-  let open Typed in
-  let input = nat_of_int 42 in
-  let expected =
-    Prog.Cons ([], [ Ty.Nat ], [ Ty.Nat ], Instr.NConst ([], input), Prog.Nil [ Ty.Nat ])
-  in
-  let nconst = Exp.NConst input in
-  let actual = Exp.compile Ty.Nat nconst [] in
-  Alcotest.(check testable_prog) "same prog" expected actual
+  let denote_nconst () =
+    let expected = nat_of_int 42 in
+    let nconst = Exp.NConst expected in
+    let actual = Exp.denote Ty.Nat nconst |> Obj.obj in
+    Alcotest.(check testable_nat) "same nat" expected actual
 
-let denote_compile_nconst () =
-  let open Typed in
-  let input = nat_of_int 42 in
-  let nconst = Exp.NConst input in
-  let actual = Prog.denote [] [] (Exp.compile Ty.Nat nconst []) (Obj.repr ()) |> Obj.obj in
-  Alcotest.(check (pair testable_nat unit)) "same pair" (input, ()) actual
+  let compile_nconst () =
+    let input = nat_of_int 42 in
+    let expected =
+      Prog.Cons ([], [ Ty.Nat ], [ Ty.Nat ], Instr.NConst ([], input), Prog.Nil [ Ty.Nat ])
+    in
+    let nconst = Exp.NConst input in
+    let actual = Exp.compile Ty.Nat nconst [] in
+    Alcotest.(check testable_prog) "same prog" expected actual
+
+  let denote_compile_nconst () =
+    let input = nat_of_int 42 in
+    let expected = (input, ()) in
+    let nconst = Exp.NConst input in
+    let actual = Prog.denote [] [] (Exp.compile Ty.Nat nconst []) (Obj.repr ()) |> Obj.obj in
+    Alcotest.(check (pair testable_nat unit)) "same pair" expected actual
+end
 
 let () =
-  Alcotest.(
-    run "Stack_machine"
-      [
-        ( "Exp",
-          [
-            test_case "denote_nconst" `Quick denote_nconst;
-            test_case "compile_nconst" `Quick compile_nconst;
-            test_case "denote_compile_nconst" `Quick denote_compile_nconst;
-          ] );
-      ])
+  let open Alcotest in
+  run "Stack_machine"
+    [
+      ( "Exp",
+        [
+          test_case "denote_nconst" `Quick Tests.denote_nconst;
+          test_case "compile_nconst" `Quick Tests.compile_nconst;
+          test_case "denote_compile_nconst" `Quick Tests.denote_compile_nconst;
+        ] );
+    ]
