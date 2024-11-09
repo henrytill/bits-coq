@@ -37,8 +37,8 @@ let denote_nconst () =
   let open Typed in
   let expected = nat_of_int 42 in
   let nconst = Exp.NConst expected in
-  let denotation = Exp.denote Ty.Nat nconst |> Obj.obj in
-  Alcotest.(check testable_nat) "same nat" expected denotation
+  let actual = Exp.denote Ty.Nat nconst |> Obj.obj in
+  Alcotest.(check testable_nat) "same nat" expected actual
 
 let compile_nconst () =
   let open Typed in
@@ -47,15 +47,15 @@ let compile_nconst () =
     Prog.Cons ([], [ Ty.Nat ], [ Ty.Nat ], Instr.NConst ([], input), Prog.Nil [ Ty.Nat ])
   in
   let nconst = Exp.NConst input in
-  let denotation = Exp.compile Ty.Nat nconst [] in
-  Alcotest.(check testable_prog) "same prog" expected denotation
+  let actual = Exp.compile Ty.Nat nconst [] in
+  Alcotest.(check testable_prog) "same prog" expected actual
 
 let denote_compile_nconst () =
   let open Typed in
   let input = nat_of_int 42 in
   let nconst = Exp.NConst input in
-  let denotation = Prog.denote [] [] (Exp.compile Ty.Nat nconst []) (Obj.repr ()) |> Obj.obj in
-  Alcotest.(check (pair testable_nat unit)) "same pair" (input, ()) denotation
+  let actual = Prog.denote [] [] (Exp.compile Ty.Nat nconst []) (Obj.repr ()) |> Obj.obj in
+  Alcotest.(check (pair testable_nat unit)) "same pair" (input, ()) actual
 
 let () =
   Alcotest.(
