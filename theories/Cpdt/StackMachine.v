@@ -72,39 +72,39 @@ Module Untyped.
 
       Example denote_const :
         denote const = 42.
-      auto. Qed.
+      reflexivity. Qed.
 
       Example denote_plus :
         denote plus = 4.
-      auto. Qed.
+      reflexivity. Qed.
 
       Example denote_nested :
         denote nested = 28.
-      auto. Qed.
+      reflexivity. Qed.
 
       Example compile_const :
         compile const = [Instr.Const 42].
-      auto. Qed.
+      reflexivity. Qed.
 
       Example compile_plus :
         compile plus = [Instr.Const 2; Instr.Const 2; Instr.Binop Binop.Plus].
-      auto. Qed.
+      reflexivity. Qed.
 
       Example compile_nested :
         compile nested = [Instr.Const 7; Instr.Const 2; Instr.Const 2; Instr.Binop Binop.Plus; Instr.Binop Binop.Times].
-      auto. Qed.
+      reflexivity. Qed.
 
       Example denote_compile_const :
         Prog.denote (compile const) [] = Some [42].
-      auto. Qed.
+      reflexivity. Qed.
 
       Example denote_compile_plus :
         Prog.denote (compile plus) [] = Some [4].
-      auto. Qed.
+      reflexivity. Qed.
 
       Example denote_compile_nested :
         Prog.denote (compile nested) [] = Some [28].
-      auto. Qed.
+      reflexivity. Qed.
     End Examples.
 
     Lemma compile_correct' :
@@ -112,41 +112,30 @@ Module Untyped.
         Prog.denote (compile e ++ p) s = Prog.denote p (denote e :: s).
     Proof.
       induction e.
-      - intros.
-        unfold compile.
-        unfold denote.
-        unfold Prog.denote at 1.
-        simpl.
-        fold Prog.denote.
+      - simpl.
         reflexivity.
       - intros.
-        unfold compile.
-        fold compile.
-        unfold denote.
-        fold denote.
+        simpl.
         rewrite app_assoc_reverse.
         rewrite IHe2.
         rewrite app_assoc_reverse.
         rewrite IHe1.
-        unfold Prog.denote at 1.
-        simpl.
-        fold Prog.denote.
         reflexivity.
     Qed.
 
-    Lemma compile_correct'_auto :
+    Lemma compile_correct'':
       forall (e : t) (p : Prog.t) (s : stack),
         Prog.denote (compile e ++ p) s = Prog.denote p (denote e :: s).
     Proof.
       induction e.
       - simpl.
-        auto.
+        reflexivity.
       - intros.
         simpl.
         repeat rewrite app_assoc_reverse.
         repeat rewrite IHe2.
         repeat rewrite IHe1.
-        auto.
+        reflexivity.
     Qed.
 
     Theorem compile_correct :
@@ -241,8 +230,10 @@ Module Typed.
       induction p.
       - simpl.
         reflexivity.
-      - simpl.
-        auto.
+      - intros.
+        simpl.
+        rewrite IHp.
+        reflexivity.
     Qed.
   End Prog.
 
@@ -281,23 +272,23 @@ Module Typed.
 
       Example denote_nconst :
         denote nconst = 42.
-      auto. Qed.
+      reflexivity. Qed.
 
       Example denote_bconst :
         denote bconst = false.
-      auto. Qed.
+      reflexivity. Qed.
 
       Example denote_nested :
         denote nested = 28.
-      auto. Qed.
+      reflexivity. Qed.
 
       Example denote_nested_eq :
         denote nested_eq = false.
-      auto. Qed.
+      reflexivity. Qed.
 
       Example denote_nested_lt :
         denote nested_lt = true.
-      auto. Qed.
+      reflexivity. Qed.
 
       Eval simpl in compile nconst nil.
 
@@ -311,23 +302,23 @@ Module Typed.
 
       Example denote_compile_nconst :
         Prog.denote (compile nconst nil) tt = (42, tt).
-      auto. Qed.
+      reflexivity. Qed.
 
       Example denote_compile_bconst :
         Prog.denote (compile bconst nil) tt = (false, tt).
-      auto. Qed.
+      reflexivity. Qed.
 
       Example denote_compile_nested :
         Prog.denote (compile nested nil) tt = (28, tt).
-      auto. Qed.
+      reflexivity. Qed.
 
       Example denote_compile_nested_eq :
         Prog.denote (compile nested_eq nil) tt = (false, tt).
-      auto. Qed.
+      reflexivity. Qed.
 
       Example denote_compile_nested_lt :
         Prog.denote (compile nested_lt nil) tt = (true, tt).
-      auto. Qed.
+      reflexivity. Qed.
     End Examples.
 
     Lemma compile_correct' :
@@ -338,12 +329,11 @@ Module Typed.
       - simpl.
         reflexivity.
       - simpl.
-        auto.
+        reflexivity.
       - intros.
         simpl.
         repeat rewrite Prog.concat_correct.
         repeat rewrite IHe2.
-        repeat rewrite Prog.concat_correct.
         repeat rewrite IHe1.
         reflexivity.
     Qed.
