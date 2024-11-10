@@ -10,7 +10,7 @@
       flake = false;
     };
     opam-nix = {
-      url = "github:henrytill/opam-nix/develop";
+      url = "github:tweag/opam-nix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.opam-repository.follows = "opam-repository";
     };
