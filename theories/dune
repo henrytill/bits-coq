@@ -2,5 +2,5 @@
 
 (coq.theory
  (name Bits)
- (package coq-bits)
+ (package bits-coq)
  (theories MenhirLib))

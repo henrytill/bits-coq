@@ -1,6 +1,6 @@
-# coq-bits
+# bits-coq
 
-[![CI](https://github.com/henrytill/coq-bits/actions/workflows/ci.yml/badge.svg)](https://github.com/henrytill/coq-bits/actions/workflows/ci.yml)
+[![CI](https://github.com/henrytill/bits-coq/actions/workflows/ci.yml/badge.svg)](https://github.com/henrytill/bits-coq/actions/workflows/ci.yml)
 
 Creating a local opam switch for this project:
 
