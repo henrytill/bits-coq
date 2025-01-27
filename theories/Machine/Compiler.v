@@ -22,8 +22,8 @@ Definition code := list op.
 
 Fixpoint exec (c : code) (s : stack) : stack :=
   match c, s with
-  | [], s => s
-  | (PUSH n :: c'), s => exec c' (n :: s)
+  | [], s' => s'
+  | (PUSH n :: c'), s' => exec c' (n :: s')
   | (ADD :: c'), (m :: n :: s') => exec c' ((n + m) :: s')
   | (SUB :: c'), (m :: n :: s') => exec c' ((n - m) :: s')
   | (ADD :: _), _ => []
