@@ -18,6 +18,7 @@ jobs:
           opam-repositories: |
             coq-released: https://coq.inria.fr/opam/released
             default: https://github.com/ocaml/opam-repository.git
+          dune-cache: true
       - run: opam install . --deps-only --with-test
       - run: opam exec -- dune build
       - run: opam exec -- dune runtest
