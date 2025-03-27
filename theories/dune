@@ -3,4 +3,4 @@
 (coq.theory
  (name Bits)
  (package bits-rocq)
- (theories MenhirLib))
+ (theories Stdlib MenhirLib))

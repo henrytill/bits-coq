@@ -1,7 +1,7 @@
 (coq.extraction
  (prelude StackMachineExtraction)
  (extracted_modules stack_machine)
- (theories Bits))
+ (theories Stdlib Bits))
 
 (library
  (name stack_machine)

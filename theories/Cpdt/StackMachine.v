@@ -1,4 +1,4 @@
-From Coq Require Import Bool Arith List.
+From Stdlib Require Import Bool Arith List.
 From Bits.Cpdt Require Import Base.
 
 Module Untyped.
