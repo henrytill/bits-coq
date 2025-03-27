@@ -11,7 +11,7 @@ depends: [
   "ocaml"
   "dune" {>= "3.16"}
   "menhir"
-  "coq"
+  "coq" {< "9.0.0"}
   "coq-menhirlib"
   "ppx_deriving" {with-test & >= "6.0.3"}
   "ppx_import" {with-test & >= "1.11.0"}
