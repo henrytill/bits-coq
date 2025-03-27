@@ -1,4 +1,4 @@
-From Coq Require Import Ascii String.
+From Stdlib Require Import Ascii String.
 From Bits.Machine Require Import Parser.
 Import Parser.MenhirLibParser.Inter.
 

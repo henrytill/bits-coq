@@ -26,7 +26,7 @@
   dune
   menhir
   (coq
-   (< 9.0.0))
+   (>= 9.0.0))
   coq-menhirlib
   (ppx_deriving
    (and

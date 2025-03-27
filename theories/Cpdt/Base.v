@@ -1,4 +1,4 @@
-From Coq Require Import List.
+From Stdlib Require Import List.
 Import List.ListNotations.
 
 Lemma app_assoc_reverse {A : Type} (l m n : list A) :

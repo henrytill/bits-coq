@@ -1,6 +1,6 @@
 (* https://cstheory.stackexchange.com/a/20582 *)
 
-From Coq Require Import Arith.
+From Stdlib Require Import Arith.
 
 Inductive type : Type :=
 | Nat : type
