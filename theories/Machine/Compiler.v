@@ -1,4 +1,4 @@
-From Coq Require Import Arith List String.
+From Stdlib Require Import Arith List String.
 From Bits.Machine Require Lexer Parser.
 Import Parser.MenhirLibParser.Inter.
 Import List.ListNotations.
