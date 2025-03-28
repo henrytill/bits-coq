@@ -1,5 +1,7 @@
 (lang dune 3.16)
 
+(subst disabled)
+
 (using coq 0.8)
 
 (using menhir 2.1)
