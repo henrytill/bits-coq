@@ -50,7 +50,7 @@
             package
             ./.
             {
-              ocaml-base-compiler = "5.2.0";
+              ocaml-base-compiler = "5.3.0";
             };
         overlay = final: prev: { ${package} = prev.${package}.overrideAttrs (as: { }); };
       in
