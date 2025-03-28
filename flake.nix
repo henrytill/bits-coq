@@ -51,7 +51,6 @@
             ./.
             {
               ocaml-base-compiler = "5.2.0";
-              coq = "*";
             };
         overlay = final: prev: { ${package} = prev.${package}.overrideAttrs (as: { }); };
       in
