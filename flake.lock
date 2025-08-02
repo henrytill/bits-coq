@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "coq-opam": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1753955179,
-        "narHash": "sha256-u0kyoxSWYLC2/m/aLwcF4HFWrgxqzGLZwyhj6Kvz/eQ=",
-        "owner": "coq",
-        "repo": "opam",
-        "rev": "59ea7255cf3a72ee5bc32e2b31acab5888f98076",
-        "type": "github"
-      },
-      "original": {
-        "owner": "coq",
-        "repo": "opam",
-        "type": "github"
-      }
-    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -164,16 +148,32 @@
         "type": "github"
       }
     },
+    "rocq-opam": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1753955179,
+        "narHash": "sha256-u0kyoxSWYLC2/m/aLwcF4HFWrgxqzGLZwyhj6Kvz/eQ=",
+        "owner": "rocq-prover",
+        "repo": "opam",
+        "rev": "59ea7255cf3a72ee5bc32e2b31acab5888f98076",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rocq-prover",
+        "repo": "opam",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
-        "coq-opam": "coq-opam",
         "flake-utils": [
           "opam-nix",
           "flake-utils"
         ],
         "nixpkgs": "nixpkgs",
         "opam-nix": "opam-nix",
-        "opam-repository": "opam-repository"
+        "opam-repository": "opam-repository",
+        "rocq-opam": "rocq-opam"
       }
     },
     "systems": {

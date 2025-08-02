@@ -6,19 +6,19 @@
 
 (using menhir 2.1)
 
-(name bits-coq)
+(name bits-rocq)
 
 (generate_opam_files true)
 
 (source
- (github henrytill/bits-coq))
+ (github henrytill/bits-rocq))
 
 (authors "Henry Till <henrytill@gmail.com>")
 
 (maintainers "Henry Till <henrytill@gmail.com>")
 
 (package
- (name bits-coq)
+ (name bits-rocq)
  (synopsis "A short synopsis")
  (description "A longer description")
  (depends

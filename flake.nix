@@ -5,8 +5,8 @@
       url = "github:ocaml/opam-repository";
       flake = false;
     };
-    coq-opam = {
-      url = "github:coq/opam";
+    rocq-opam = {
+      url = "github:rocq-prover/opam";
       flake = false;
     };
     opam-nix = {
@@ -31,11 +31,11 @@
       opam-nix,
       nixpkgs,
       opam-repository,
-      coq-opam,
+      rocq-opam,
       ...
     }@inputs:
     let
-      package = "bits-coq";
+      package = "bits-rocq";
     in
     flake-utils.lib.eachDefaultSystem (
       system:
@@ -43,7 +43,7 @@
         pkgs = nixpkgs.legacyPackages.${system};
         repos = [
           "${opam-repository}"
-          "${coq-opam}/released"
+          "${rocq-opam}/released"
         ];
         on = opam-nix.lib.${system};
         scope =
