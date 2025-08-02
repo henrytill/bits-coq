@@ -17,6 +17,10 @@
     flake-utils = {
       follows = "opam-nix/flake-utils";
     };
+    coq-stdlib-src = {
+      url = "github:rocq-prover/stdlib";
+      flake = false;
+    };
   };
   nixConfig = {
     extra-substituters = [ "https://henrytill.cachix.org" ];
@@ -32,6 +36,7 @@
       nixpkgs,
       opam-repository,
       rocq-opam,
+      coq-stdlib-src,
       ...
     }@inputs:
     let
@@ -57,7 +62,13 @@
             {
               ocaml-base-compiler = "5.3.0";
             };
-        overlay = final: prev: { ${package} = prev.${package}.overrideAttrs (as: { }); };
+        overlay = final: prev: {
+          coq-stdlib = final.callPackage (on.opam2nix {
+            src = coq-stdlib-src;
+            name = "coq-stdlib";
+          }) { };
+          ${package} = prev.${package}.overrideAttrs (as: { });
+        };
       in
       {
         legacyPackages = scope.overrideScope overlay;

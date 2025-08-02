@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "coq-stdlib-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1754034500,
+        "narHash": "sha256-YkJ0PZfF7BiHp0D6r/G3XEh0yARnb27XYbmgeUkfGBM=",
+        "owner": "rocq-prover",
+        "repo": "stdlib",
+        "rev": "240d19c39994858e94fff42afc2a40b97201bbb9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rocq-prover",
+        "repo": "stdlib",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -166,6 +182,7 @@
     },
     "root": {
       "inputs": {
+        "coq-stdlib-src": "coq-stdlib-src",
         "flake-utils": [
           "opam-nix",
           "flake-utils"
