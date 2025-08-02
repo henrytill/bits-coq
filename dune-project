@@ -25,8 +25,9 @@
   ocaml
   dune
   menhir
-  (coq
+  (coq-core
    (>= 9.0.0))
+  coq-stdlib
   coq-menhirlib
   (ppx_deriving
    (and
