@@ -15,7 +15,6 @@
       inputs.opam-repository.follows = "opam-repository";
     };
     flake-utils = {
-      url = "github:numtide/flake-utils";
       follows = "opam-nix/flake-utils";
     };
   };
