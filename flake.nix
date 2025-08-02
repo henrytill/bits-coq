@@ -17,8 +17,8 @@
     flake-utils = {
       follows = "opam-nix/flake-utils";
     };
-    coq-stdlib-src = {
-      url = "github:rocq-prover/stdlib";
+    rocq-stdlib-patch = {
+      url = "https://github.com/rocq-prover/stdlib/commit/1b6680355e40b9a05c288ad900e0060090f05a6d.diff";
       flake = false;
     };
   };
@@ -36,7 +36,7 @@
       nixpkgs,
       opam-repository,
       rocq-opam,
-      coq-stdlib-src,
+      rocq-stdlib-patch,
       ...
     }@inputs:
     let
@@ -62,13 +62,23 @@
             {
               ocaml-base-compiler = "5.3.0";
             };
-        overlay = final: prev: {
-          coq-stdlib = final.callPackage (on.opam2nix {
-            src = coq-stdlib-src;
-            name = "coq-stdlib";
-          }) { };
-          ${package} = prev.${package}.overrideAttrs (as: { });
-        };
+        overlay =
+          final: prev:
+          let
+            rocqLib = "${prev.rocq-stdlib}/lib/ocaml/${prev.ocaml.version}/site-lib/coq";
+            rocqLibConfig = {
+              preConfigure = ''
+                export ROCQLIB=${rocqLib}
+              '';
+            };
+          in
+          {
+            rocq-stdlib = prev.rocq-stdlib.overrideAttrs (as: {
+              patches = as.patches ++ [ rocq-stdlib-patch ];
+            });
+            coq-menhirlib = prev.coq-menhirlib.overrideAttrs (as: rocqLibConfig // { });
+            ${package} = prev.${package}.overrideAttrs (as: rocqLibConfig // { });
+          };
       in
       {
         legacyPackages = scope.overrideScope overlay;

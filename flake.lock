@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "coq-stdlib-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1754034500,
-        "narHash": "sha256-YkJ0PZfF7BiHp0D6r/G3XEh0yARnb27XYbmgeUkfGBM=",
-        "owner": "rocq-prover",
-        "repo": "stdlib",
-        "rev": "240d19c39994858e94fff42afc2a40b97201bbb9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rocq-prover",
-        "repo": "stdlib",
-        "type": "github"
-      }
-    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -180,9 +164,20 @@
         "type": "github"
       }
     },
+    "rocq-stdlib-patch": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-BmGtKqlqZm9OuPcLDncodnr89lYomXNWwdl2iCB+6D4=",
+        "type": "file",
+        "url": "https://github.com/rocq-prover/stdlib/commit/1b6680355e40b9a05c288ad900e0060090f05a6d.diff"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/rocq-prover/stdlib/commit/1b6680355e40b9a05c288ad900e0060090f05a6d.diff"
+      }
+    },
     "root": {
       "inputs": {
-        "coq-stdlib-src": "coq-stdlib-src",
         "flake-utils": [
           "opam-nix",
           "flake-utils"
@@ -190,7 +185,8 @@
         "nixpkgs": "nixpkgs",
         "opam-nix": "opam-nix",
         "opam-repository": "opam-repository",
-        "rocq-opam": "rocq-opam"
+        "rocq-opam": "rocq-opam",
+        "rocq-stdlib-patch": "rocq-stdlib-patch"
       }
     },
     "systems": {
