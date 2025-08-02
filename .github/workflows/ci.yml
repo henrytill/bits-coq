@@ -19,6 +19,20 @@ jobs:
             rocq-released: https://rocq-prover.org/opam/released
             default: https://github.com/ocaml/opam-repository.git
           dune-cache: true
+      - name: Pin Rocq
+        run: |
+          opam pin add --dev-repo rocq-runtime
+          opam pin add --dev-repo rocq-core
+          opam pin add --dev-repo coq-core
+          opam pin add --dev-repo rocq-stdlib
+          opam pin add --dev-repo coq-stdlib
+      - name: Pin Menhir
+        run: |
+          opam pin add menhirCST git+https://git.sr.ht/~henrytill/menhir#depend-on-coq-core
+          opam pin add menhirLib git+https://git.sr.ht/~henrytill/menhir#depend-on-coq-core
+          opam pin add menhirSdk git+https://git.sr.ht/~henrytill/menhir#depend-on-coq-core
+          opam pin add menhir git+https://git.sr.ht/~henrytill/menhir#depend-on-coq-core
+          opam pin add coq-menhirlib git+https://git.sr.ht/~henrytill/menhir#depend-on-coq-core
       - run: opam install . --deps-only --with-test
       - run: opam exec -- dune build
       - run: opam exec -- dune runtest
