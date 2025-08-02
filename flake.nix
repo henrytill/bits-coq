@@ -10,7 +10,7 @@
       flake = false;
     };
     opam-nix = {
-      url = "github:tweag/opam-nix";
+      url = "github:henrytill/opam-nix/rocq-fixes";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.opam-repository.follows = "opam-repository";
     };
@@ -65,10 +65,10 @@
         overlay =
           final: prev:
           let
-            rocqLib = "${prev.rocq-stdlib}/lib/ocaml/${prev.ocaml.version}/site-lib/coq";
+            rocqLib = "${final.rocq-stdlib}/lib/ocaml/${prev.ocaml.version}/site-lib/coq";
             rocqLibConfig = {
               preConfigure = ''
-                export ROCQLIB=${rocqLib}
+                echo ROCQLIB=$ROCQLIB
               '';
             };
           in
