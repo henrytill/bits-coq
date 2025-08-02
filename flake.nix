@@ -57,7 +57,20 @@
             {
               ocaml-base-compiler = "5.3.0";
             };
-        overlay = final: prev: { ${package} = prev.${package}.overrideAttrs (as: { }); };
+        overlay =
+          final: prev:
+          let
+            rocqLibConfig = {
+              preConfigure = ''
+                echo COQLIB=$COQLIB
+                echo ROCQLIB=$ROCQLIB
+              '';
+            };
+          in
+          {
+            coq-menhirlib = prev.coq-menhirlib.overrideAttrs (as: rocqLibConfig // { });
+            ${package} = prev.${package}.overrideAttrs (as: rocqLibConfig // { });
+          };
       in
       {
         legacyPackages = scope.overrideScope overlay;
