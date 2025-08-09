@@ -9,18 +9,6 @@ CoFixpoint TheEnd : buffer := Buf_cons (EOF tt) TheEnd.
 
 Definition is_digit c := (("0" <=? c) && (c <=? "9"))%char.
 
-Example test_is_digit_0 : is_digit "0" = true.
-Proof. simpl. reflexivity. Qed.
-
-Example test_is_digit_1 : is_digit "1" = true.
-Proof. simpl. reflexivity. Qed.
-
-Example test_is_digit_42 : is_digit "9" = true.
-Proof. simpl. reflexivity. Qed.
-
-Example test_is_digit_a : is_digit "a" = false.
-Proof. simpl. reflexivity. Qed.
-
 Fixpoint readnum acc s :=
   match s with
   | String "0" s => readnum (acc * 10) s
@@ -35,12 +23,6 @@ Fixpoint readnum acc s :=
   | String "9" s => readnum (acc * 10 + 9) s
   | _ => (acc, s)
   end.
-
-Example readnum_1 : readnum 0 "1" = (1, ""%string).
-Proof. simpl. reflexivity. Qed.
-
-Example readnum_137 : readnum 0 "137" = (137, ""%string).
-Proof. simpl. reflexivity. Qed.
 
 Fixpoint lex_string_cpt n s :=
   match n with
@@ -69,3 +51,14 @@ Fixpoint lex_string_cpt n s :=
   end.
 
 Definition lex_string (s : string) := lex_string_cpt (length s) s.
+
+Section Tests.
+  Let _test_is_digit_0 : is_digit "0" = true := eq_refl.
+  Let _test_is_digit_1 : is_digit "1" = true := eq_refl.
+  Let _test_is_digit_9 : is_digit "9" = true := eq_refl.
+  Let _test_is_digit_137 : is_digit "137" = false := eq_refl.
+  Let _test_is_digit_a : is_digit "a" = false := eq_refl.
+
+  Let _test_readnum_1 : readnum 0 "1" = (1, ""%string) := eq_refl.
+  Let _test_readnum_137 : readnum 0 "137" = (137, ""%string) := eq_refl.
+End Tests.

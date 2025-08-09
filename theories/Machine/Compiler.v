@@ -66,23 +66,15 @@ Proof.
   reflexivity.
 Qed.
 
-Example test_compile_val : compile (Syntax.Val 5) = [PUSH 5].
-Proof. reflexivity. Qed.
+Section Tests.
+  Let _test_compile_val : compile (Syntax.Val 5) = [PUSH 5] := eq_refl.
+  Let _test_compile_add : compile (Syntax.Add (Syntax.Val 3) (Syntax.Val 4)) = [PUSH 3; PUSH 4; ADD] := eq_refl.
+  Let _test_compile_sub : compile (Syntax.Sub (Syntax.Val 4) (Syntax.Val 3)) = [PUSH 4; PUSH 3; SUB] := eq_refl.
 
-Example test_compile_add : compile (Syntax.Add (Syntax.Val 3) (Syntax.Val 4)) = [PUSH 3; PUSH 4; ADD].
-Proof. reflexivity. Qed.
-
-Example test_compile_sub : compile (Syntax.Sub (Syntax.Val 4) (Syntax.Val 3)) = [PUSH 4; PUSH 3; SUB].
-Proof. reflexivity. Qed.
-
-Example test_exec_val : exec (compile (Syntax.Val 5)) [] = [5].
-Proof. reflexivity. Qed.
-
-Example test_exec_add : exec (compile (Syntax.Add (Syntax.Val 3) (Syntax.Val 4))) [] = [7].
-Proof. reflexivity. Qed.
-
-Example test_exec_sub : exec (compile (Syntax.Sub (Syntax.Val 4) (Syntax.Val 3))) [] = [1].
-Proof. reflexivity. Qed.
+  Let _test_exec_compile_val : exec (compile (Syntax.Val 5)) [] = [5] := eq_refl.
+  Let _test_exec_compile_add : exec (compile (Syntax.Add (Syntax.Val 3) (Syntax.Val 4))) [] = [7] := eq_refl.
+  Let _test_exec_compile_sub : exec (compile (Syntax.Sub (Syntax.Val 4) (Syntax.Val 3))) [] = [1] := eq_refl.
+End Tests.
 
 Definition parse_string s :=
   match option_map (Parser.parse_expr 50) (Lexer.lex_string s) with
