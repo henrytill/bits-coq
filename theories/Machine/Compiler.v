@@ -49,10 +49,12 @@ Proof.
   - simpl.
     rewrite IHe1.
     rewrite IHe2.
+    simpl.
     reflexivity.
   - simpl.
     rewrite IHe1.
     rewrite IHe2.
+    simpl.
     reflexivity.
 Qed.
 
