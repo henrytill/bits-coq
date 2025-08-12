@@ -148,7 +148,7 @@ Module Typed.
     Inductive t : Ty.t -> Ty.t -> Ty.t -> Set :=
     | Plus : t Ty.Nat Ty.Nat Ty.Nat
     | Times : t Ty.Nat Ty.Nat Ty.Nat
-    | Eq : forall a, t a a Ty.Bool
+    | Eq a : t a a Ty.Bool
     | Lt : t Ty.Nat Ty.Nat Ty.Bool.
 
     Definition denote {x y r : Ty.t} (b : t x y r) : Ty.denote x -> Ty.denote y -> Ty.denote r :=
@@ -171,9 +171,9 @@ Module Typed.
 
   Module Instr.
     Inductive t : tstack -> tstack -> Set :=
-    | NConst : forall s, nat -> t s (Ty.Nat :: s)
-    | BConst : forall s, bool -> t s (Ty.Bool :: s)
-    | Binop : forall x y r s, Binop.t x y r -> t (x :: y :: s) (r :: s).
+    | NConst s : nat -> t s (Ty.Nat :: s)
+    | BConst s : bool -> t s (Ty.Bool :: s)
+    | Binop x y r s : Binop.t x y r -> t (x :: y :: s) (r :: s).
 
     Definition denote {a b : tstack} (i : t a b) : vstack a -> vstack b :=
       match i with
@@ -187,8 +187,8 @@ Module Typed.
 
   Module Prog.
     Inductive t : tstack -> tstack -> Set :=
-    | Nil : forall a, t a a
-    | Cons : forall a b c, Instr.t a b -> t b c -> t a c.
+    | Nil a : t a a
+    | Cons a b c : Instr.t a b -> t b c -> t a c.
 
     Fixpoint denote {a b : tstack} (p : t a b) : vstack a -> vstack b :=
       match p with
@@ -220,7 +220,7 @@ Module Typed.
     Inductive t : Ty.t -> Set :=
     | NConst : nat -> t Ty.Nat
     | BConst : bool ->  t Ty.Bool
-    | Binop : forall x y r, Binop.t x y r -> t x -> t y -> t r.
+    | Binop x y r : Binop.t x y r -> t x -> t y -> t r.
 
     Fixpoint denote {x : Ty.t} (e : t x) : Ty.denote x :=
       match e with
