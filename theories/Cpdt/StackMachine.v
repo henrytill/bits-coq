@@ -70,41 +70,20 @@ Module Untyped.
       Definition plus := Binop Binop.Plus (Const 2) (Const 2).
       Definition nested := Binop Binop.Times plus (Const 7).
 
-      Example denote_const :
-        denote const = 42.
-      reflexivity. Qed.
+      Let _denote_const : denote const = 42 := eq_refl.
+      Let _denote_plus : denote plus = 4 := eq_refl.
+      Let _denote_nested : denote nested = 28 := eq_refl.
 
-      Example denote_plus :
-        denote plus = 4.
-      reflexivity. Qed.
+      Let _compile_const : compile const = [Instr.Const 42] := eq_refl.
+      Let _compile_plus : compile plus = [Instr.Const 2; Instr.Const 2; Instr.Binop Binop.Plus] := eq_refl.
+      Let _compile_nested :
+        let expected := [Instr.Const 7; Instr.Const 2; Instr.Const 2; Instr.Binop Binop.Plus; Instr.Binop Binop.Times]
+        in
+        compile nested = expected := eq_refl.
 
-      Example denote_nested :
-        denote nested = 28.
-      reflexivity. Qed.
-
-      Example compile_const :
-        compile const = [Instr.Const 42].
-      reflexivity. Qed.
-
-      Example compile_plus :
-        compile plus = [Instr.Const 2; Instr.Const 2; Instr.Binop Binop.Plus].
-      reflexivity. Qed.
-
-      Example compile_nested :
-        compile nested = [Instr.Const 7; Instr.Const 2; Instr.Const 2; Instr.Binop Binop.Plus; Instr.Binop Binop.Times].
-      reflexivity. Qed.
-
-      Example denote_compile_const :
-        Prog.denote (compile const) [] = Some [42].
-      reflexivity. Qed.
-
-      Example denote_compile_plus :
-        Prog.denote (compile plus) [] = Some [4].
-      reflexivity. Qed.
-
-      Example denote_compile_nested :
-        Prog.denote (compile nested) [] = Some [28].
-      reflexivity. Qed.
+      Let _denote_compile_const : Prog.denote (compile const) [] = Some [42] := eq_refl.
+      Let _denote_compile_plus : Prog.denote (compile plus) [] = Some [4] := eq_refl.
+      Let _denote_compile_nested : Prog.denote (compile nested) [] = Some [28] := eq_refl.
     End Examples.
 
     Lemma compile_correct' :
@@ -270,55 +249,23 @@ Module Typed.
       Definition nested_eq := Binop (Binop.Eq Ty.Nat) plus (NConst 7).
       Definition nested_lt := Binop Binop.Lt plus (NConst 7).
 
-      Example denote_nconst :
-        denote nconst = 42.
-      reflexivity. Qed.
-
-      Example denote_bconst :
-        denote bconst = false.
-      reflexivity. Qed.
-
-      Example denote_nested :
-        denote nested = 28.
-      reflexivity. Qed.
-
-      Example denote_nested_eq :
-        denote nested_eq = false.
-      reflexivity. Qed.
-
-      Example denote_nested_lt :
-        denote nested_lt = true.
-      reflexivity. Qed.
+      Let _denote_nconst : denote nconst = 42 := eq_refl.
+      Let _denote_bconst : denote bconst = false := eq_refl.
+      Let _denote_nested : denote nested = 28 := eq_refl.
+      Let _denote_nested_eq : denote nested_eq = false := eq_refl.
+      Let _denote_nested_lt : denote nested_lt = true := eq_refl.
 
       Eval simpl in compile nconst nil.
-
       Eval simpl in compile bconst nil.
-
       Eval simpl in compile nested nil.
-
       Eval simpl in compile nested_eq nil.
-
       Eval simpl in compile nested_lt nil.
 
-      Example denote_compile_nconst :
-        Prog.denote (compile nconst nil) tt = (42, tt).
-      reflexivity. Qed.
-
-      Example denote_compile_bconst :
-        Prog.denote (compile bconst nil) tt = (false, tt).
-      reflexivity. Qed.
-
-      Example denote_compile_nested :
-        Prog.denote (compile nested nil) tt = (28, tt).
-      reflexivity. Qed.
-
-      Example denote_compile_nested_eq :
-        Prog.denote (compile nested_eq nil) tt = (false, tt).
-      reflexivity. Qed.
-
-      Example denote_compile_nested_lt :
-        Prog.denote (compile nested_lt nil) tt = (true, tt).
-      reflexivity. Qed.
+      Let _denote_compile_nconst : Prog.denote (compile nconst nil) tt = (42, tt) := eq_refl.
+      Let _denote_compile_bconst : Prog.denote (compile bconst nil) tt = (false, tt) := eq_refl.
+      Let _denote_compile_nested : Prog.denote (compile nested nil) tt = (28, tt) := eq_refl.
+      Let _denote_compile_nested_eq : Prog.denote (compile nested_eq nil) tt = (false, tt) := eq_refl.
+      Let _denote_compile_nested_lt : Prog.denote (compile nested_lt nil) tt = (true, tt) := eq_refl.
     End Examples.
 
     Lemma compile_correct' :
