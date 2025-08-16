@@ -53,12 +53,12 @@ Fixpoint lex_string_cpt n s :=
 Definition lex_string (s : string) := lex_string_cpt (length s) s.
 
 Section Tests.
-  Let _test_is_digit_0 : is_digit "0" = true := eq_refl.
-  Let _test_is_digit_1 : is_digit "1" = true := eq_refl.
-  Let _test_is_digit_9 : is_digit "9" = true := eq_refl.
-  Let _test_is_digit_137 : is_digit "137" = false := eq_refl.
-  Let _test_is_digit_a : is_digit "a" = false := eq_refl.
+  Let test_is_digit_0 : is_digit "0" = true := eq_refl.
+  Let test_is_digit_1 : is_digit "1" = true := eq_refl.
+  Let test_is_digit_9 : is_digit "9" = true := eq_refl.
+  Let test_is_digit_137 : is_digit "137" = false := eq_refl.
+  Let test_is_digit_a : is_digit "a" = false := eq_refl.
 
-  Let _test_readnum_1 : readnum 0 "1" = (1, ""%string) := eq_refl.
-  Let _test_readnum_137 : readnum 0 "137" = (137, ""%string) := eq_refl.
+  Let test_readnum_1 : readnum 0 "1" = (1, ""%string) := eq_refl.
+  Let test_readnum_137 : readnum 0 "137" = (137, ""%string) := eq_refl.
 End Tests.

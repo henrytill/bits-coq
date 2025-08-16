@@ -53,15 +53,15 @@ Section Tests.
   Let tm_3 := App Succ tm_2.
   Let tm_5 := App Succ (App Succ tm_3).
 
-  Let _denote_tm_1 : term_denote tm_1 = 1 := eq_refl.
-  Let _denote_tm_2 : term_denote tm_2 = 2 := eq_refl.
-  Let _denote_tm_3 : term_denote tm_3 = 3 := eq_refl.
-  Let _denote_tm_5 : term_denote tm_5 = 5 := eq_refl.
+  Let denote_tm_1 : term_denote tm_1 = 1 := eq_refl.
+  Let denote_tm_2 : term_denote tm_2 = 2 := eq_refl.
+  Let denote_tm_3 : term_denote tm_3 = 3 := eq_refl.
+  Let denote_tm_5 : term_denote tm_5 = 5 := eq_refl.
 
   Check App Iter tm_5.
   Check App (App Iter tm_5) Succ.
   Check App (App (App Iter tm_5) Succ) tm_3.
 
   Let iter_8 := App (App (App Iter tm_5) Succ) tm_3.
-  Let _denote_iter_8 : term_denote iter_8 = 8 := eq_refl.
+  Let denote_iter_8 : term_denote iter_8 = 8 := eq_refl.
 End Tests.
